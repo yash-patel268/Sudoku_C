@@ -198,3 +198,35 @@ void *validate(void) {
 
 		return NULL;
 }
+
+int main() {
+	FILE *puzzle = fopen("puzzle.txt", "r");
+	readPuzzle(puzzle);
+	FILE *solution = fopen("solution.txt", "w");
+
+	if (solver(0, 0)){
+		printf("Solution found\n");
+	} else {
+		printf("No Solution\n");
+	}
+
+	for(int x = 0; x < N; x++){
+		for(int y = 0; y < N; y++) {
+			fprintf(solution, "%d ", sudoku[x][y]);
+
+			if (y == 8) {
+				fprintf(solution, "\n");
+			}
+		}
+	}
+
+	validate();
+
+	if (isCorrect[0] == 1 && isCorrect[1] == 1 && isCorrect[2] == 1){
+		printf("Sudoku is correct");
+	} else {
+		printf("Sudoku is incorrect");
+	}
+
+	return 0;
+}
