@@ -117,7 +117,7 @@ void *columnChecker() {
 
 		for (int row = 0; row < 9; row++) {
 			int toCheck = sudoku[row][column];
-            
+
 			if (flag[toCheck - 1] == 0) {
 				flag[toCheck - 1] = 1;
 			} else {
@@ -132,6 +132,39 @@ void *columnChecker() {
 	}
 	if (incorrect == 0) {
 		isCorrect[1] = 1;
+	}
+	return NULL;
+}
+
+void *checkSquare(void * squareInfo) {
+	int value;
+
+	parameters * params = squareInfo;
+	int box_column = params->column;
+	int box_row = params->row;
+
+	int error = 0;
+	int flags[N] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+	for (int column = 0; column < 3; column++) {
+		for (int row = 0; row < 3; row++) {
+			value = sudoku[row + box_row][column + box_column];
+
+			if (flags[value - 1] == 1) {
+				error = 1;
+				break;
+			} else {
+				flags[value - 1] = 1;
+			}
+		}
+
+		if (error == 1) {
+			break;
+		}
+
+		if (error == 0) {
+			isCorrect[2] = 1;
+		}
 	}
 	return NULL;
 }
