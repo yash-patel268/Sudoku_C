@@ -56,7 +56,7 @@ int sudokuSolver(int row, int col) {
     
                 if ((row+1) < N) {
                     
-                    if (solver(row + 1, col) == 1) {
+                    if (sudokuSolver(row + 1, col) == 1) {
                         return 1;
                     } else {
                         
@@ -64,7 +64,7 @@ int sudokuSolver(int row, int col) {
                     }
                 
                 } else if ((col+1)<9) {
-                    if (solver(0, col + 1) == 1) {
+                    if (sudokuSolver(0, col + 1) == 1) {
                         return 1;
                     } else {
                         
@@ -77,9 +77,9 @@ int sudokuSolver(int row, int col) {
         }
     } else {
         if((row+1) < N) {
-            return solver(row +1, col);
+            return sudokuSolver(row +1, col);
         } else if((col+1) < N) {
-            return solver(0, col+1);
+            return sudokuSolver(0, col+1);
         } else {
             return 1;
         }
@@ -204,7 +204,7 @@ int main() {
 	readPuzzle(puzzle);
 	FILE *solution = fopen("solution.txt", "w");
 
-	if (solver(0, 0)){
+	if (sudokuSolver(0, 0)){
 		printf("Solution found\n");
 	} else {
 		printf("No Solution\n");
