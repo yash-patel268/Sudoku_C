@@ -90,20 +90,48 @@ int sudokuSolver(int row, int col) {
 void *rowChecker() {
 	int passfail = 1;
 
-	for (int a = 0; a < 9; a++) {
-		int flags[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	for (int x = 0; x < N; x++) {
+		int flags[N] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-		for (int i = 0; i < 9; i++) {
-			if (flags[sudoku[a][i] - 1] == 0){
-                flags[sudoku[a][i] - 1] = 1;
+		for (int y = 0; y < N; y++) {
+			if (flags[sudoku[x][y] - 1] == 0){
+                flags[sudoku[x][y] - 1] = 1;
             } else {
 				passfail = 0;
 				break;
 			}
 		}
 	}
+
 	if (passfail == 1) {
 		isCorrect[0] = 1;
+	}
+	return NULL;
+}
+
+void *columnChecker() {
+	int incorrect = 0;
+
+	for (int column = 0; column < N; column++) {
+		int flag[N] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+		for (int row = 0; row < 9; row++) {
+			int toCheck = sudoku[row][column];
+            
+			if (flag[toCheck - 1] == 0) {
+				flag[toCheck - 1] = 1;
+			} else {
+				incorrect = 1;
+				break;
+			}
+
+			if (incorrect == 1){
+                break;
+            }
+		}
+	}
+	if (incorrect == 0) {
+		isCorrect[1] = 1;
 	}
 	return NULL;
 }
