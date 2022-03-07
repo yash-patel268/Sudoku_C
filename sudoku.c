@@ -20,4 +20,29 @@ void readPuzzle(FILE *file) {
 	}
 }
 
+int checkNum(int row, int column, int num){
+	int rowStart = (row/3) * 3;
+	int columnStart = (column/3)*3;
 
+	int flag = 1;
+
+	for (int x = 0; x < N; x++) {
+		if (sudoku[row][x] == num) {
+			flag = 0;
+		}
+		
+		if (sudoku[x][column] == num) {
+			flag = 0;
+		}
+
+		for (int x = rowStart; x < rowStart+3; x++){
+			for (int y = columnStart; y < 3; y++) {
+				if (sudoku[x][y] == num ) {
+					flag = 0;
+
+				}
+			}
+		}
+	}
+	return flag;
+}
