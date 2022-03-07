@@ -168,3 +168,33 @@ void *checkSquare(void * squareInfo) {
 	}
 	return NULL;
 }
+
+void *validate(void) {
+		pthread_t rowThread;
+		pthread_create(&rowThread, 0, rowChecker, (void *) "Row Checker");
+
+		pthread_t columnThread;
+		pthread_create(&columnThread, 0, columnChecker, (void *) "Column Checker");
+
+		pthread_t squareThread[N];
+		parameters squares[N];
+
+		int x = 0;
+		for (int countcolumn = 0; countcolumn <= 6; countcolumn += 3) {
+			for (int countrow = 0; countrow <= 6; countrow += 3) {
+				squares[x].column = countcolumn;
+				squares[x].row = countrow;
+				pthread_create(&squareThread[x], 0, checkSquare, (void *) &squares[x]);
+				x++;
+			}
+		}
+
+		pthread_join(rowThread, 0);
+		pthread_join(columnThread, 0);
+
+		for(int x = 0; x < N; x++){
+			pthread_join(squareThread[x], 0);
+		}
+
+		return NULL;
+}
